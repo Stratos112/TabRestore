@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "bstfy",
-  "version": "1.0",
-  "description": "Adds a browser action icon to the toolbar. Click the button to crawl and download images.",
+  "name": "TabRestore",
+  "version": "1.1",
+  "description": "Click 'Save Links' to backup current session to a .txt file. click 'Load .txt' to load a session from a file.",
   "icons": {
     "48": "icons/616487.png"
   },
@@ -28,8 +28,8 @@
   ],
   "action": {
     "default_icon": "icons/616487.png",
-    "default_title": "Beastify",
-    "default_popup": "popup/choose_beast.html"
+    "default_title": "TabRestore",
+    "default_popup": "popup/popup.html"
   },
   "background": {
     "service_worker": "content_scripts/background.js"

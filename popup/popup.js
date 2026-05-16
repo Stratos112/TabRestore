@@ -71,10 +71,25 @@ function saveLinks(tabs) {
             links += (tab.url + "\n");
         });
 
+        //get timestamp
+        const now = new Date();
+        const parts = new Intl.DateTimeFormat('en-US', {
+           year: 'numeric', month: '2-digit', day: '2-digit',
+           hour: '2-digit', minute: '2-digit', second: '2-digit',
+           hour12: false
+        }).formatToParts(now);
+
+        const dt = parts.reduce((acc, part) => {
+        acc[part.type] = part.value;
+        return acc;
+        }, {});
+
+        const formatted = `${dt.month}-${dt.day}-${dt.year}_${dt.hour}.${dt.minute}.${dt.second}`;
+
         // download 
         var element = document.createElement('a');
         element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(links));
-        element.setAttribute('download', "lnks" + Math.random() + ".txt");
+        element.setAttribute('download', "Browser-Tabs-From_" + formatted + ".txt");
         element.style.display = 'none';
         document.body.appendChild(element);
         element.click();
