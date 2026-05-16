@@ -1,0 +1,37 @@
+{
+  "manifest_version": 3,
+  "name": "bstfy",
+  "version": "1.0",
+  "description": "Adds a browser action icon to the toolbar. Click the button to crawl and download images.",
+  "icons": {
+    "48": "icons/616487.png"
+  },
+  "content_scripts": [
+    {
+      "js": [
+        "content_scripts/blankpage_content.js"
+      ],
+      "matches": [
+        "http://www.blankwebsite.com/"
+      ]
+    }
+  ],
+  "permissions": [
+    "activeTab",
+    "tabs",
+    "scripting"
+  ],
+  "host_permissions": [
+    "http://*/*",
+    "https://*/*",
+    "*://*/*"
+  ],
+  "action": {
+    "default_icon": "icons/616487.png",
+    "default_title": "Beastify",
+    "default_popup": "popup/choose_beast.html"
+  },
+  "background": {
+    "service_worker": "content_scripts/background.js"
+  }
+}
