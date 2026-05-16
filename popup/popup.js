@@ -105,18 +105,21 @@ async function loadTxt(){
     if (file) {
         var reader = new FileReader();
         reader.onload = function (e) {
-            
             content = reader.result;
+            
             content.toString().split('\n').forEach(line => {
-                links.push(line);
+                const cleanLine = line.trim(); // Removes hidden \r characters and spaces
+                
+                if (cleanLine) { // Skips completely empty lines
+                    const formattedUrl = cleanLine.startsWith('http') ? cleanLine : `https://${cleanLine}`;
+                    links.push(formattedUrl);
+                }
             });
 
-            links.forEach((link) =>{
-            chrome.tabs.create({
-                url: link,
-                });
-        });
-      }
+            links.forEach((link) => {
+                chrome.tabs.create({ url: link });
+            });
+        };
         reader.readAsText(file);
     }
 }
