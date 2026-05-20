@@ -101,13 +101,34 @@ function saveLinks(tabs) {
 
 async function loadTxt() {
     const tab = await getTab();
-    chrome.tabs.update(tab.id, { url: chrome.runtime.getURL('popup/load.html') });
+    const { preserveCurrentTabs } = await chrome.storage.local.get('preserveCurrentTabs');
+    const url = chrome.runtime.getURL('popup/load.html')
+        + '?closeTabId=' + (preserveCurrentTabs ? '' : tab.id);
+    chrome.tabs.update(tab.id, { url });
 }
 
-//helper if settings is clicked
 function openSettings() {
-    // TODO
+    const overlay = document.getElementById('settings-overlay');
+    const isHidden = overlay.classList.contains('hidden');
+
+    if (isHidden) {
+        chrome.storage.local.get('preserveCurrentTabs', ({ preserveCurrentTabs }) => {
+            document.getElementById('preserve-tabs').checked = !!preserveCurrentTabs;
+        });
+        overlay.classList.remove('hidden');
+    } else {
+        overlay.classList.add('hidden');
+    }
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('preserve-tabs').addEventListener('change', (e) => {
+        chrome.storage.local.set({ preserveCurrentTabs: e.target.checked });
+    });
+    document.getElementById('back').addEventListener('click', () => {
+        document.getElementById('settings-overlay').classList.add('hidden');
+    });
+});
 
 //-----------------------------------------------------------------------------------------------------------------
 

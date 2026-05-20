@@ -1,6 +1,7 @@
 html,
 body {
-  width: 150px;
+    width: 150px;
+    position: relative;
 }
 
 #popup-content {
@@ -9,7 +10,88 @@ body {
 }
 
 .hidden {
-  display: none;
+    display: none !important;
+}
+
+#settings-overlay {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: #f0f8f8;
+    padding: 12px;
+    box-sizing: border-box;
+}
+
+#back {
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    width: auto;
+    margin: 0;
+    padding: 2px;
+    background: none;
+}
+
+#back img {
+    width: 16px;
+    height: 16px;
+    display: block;
+    transition: transform 0.2s ease;
+}
+
+#back:hover img {
+    transform: translateX(-3px);
+}
+
+.settings-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.82em;
+    margin-top: 28px;
+}
+
+.toggle {
+    position: relative;
+    display: inline-block;
+    width: 32px;
+    height: 18px;
+    flex-shrink: 0;
+    margin-left: 8px;
+}
+
+.toggle input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    inset: 0;
+    background: #b0c8c8;
+    border-radius: 18px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.slider::before {
+    content: "";
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    left: 3px;
+    top: 3px;
+    background: white;
+    border-radius: 50%;
+    transition: transform 0.2s;
+}
+
+.toggle input:checked + .slider {
+    background: #4aacac;
+}
+
+.toggle input:checked + .slider::before {
+    transform: translateX(14px);
 }
 
 button {
