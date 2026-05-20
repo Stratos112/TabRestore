@@ -98,35 +98,7 @@ function saveLinks(tabs) {
 }
 
 function loadTxt() {
-    const input = document.createElement('input');
-    input.type = 'file';
-    input.accept = '.txt';
-    input.style.display = 'none';
-    document.body.appendChild(input);
-
-    input.addEventListener('change', function () {
-        const file = input.files[0];
-        document.body.removeChild(input);
-        if (!file) return;
-
-        var reader = new FileReader();
-        reader.onload = function (e) {
-            var links = [];
-            e.target.result.toString().split('\n').forEach(line => {
-                const cleanLine = line.trim();
-                if (cleanLine) {
-                    const formattedUrl = cleanLine.startsWith('http') ? cleanLine : `https://${cleanLine}`;
-                    links.push(formattedUrl);
-                }
-            });
-            links.forEach((link) => {
-                chrome.tabs.create({ url: link });
-            });
-        };
-        reader.readAsText(file);
-    });
-
-    input.click();
+    chrome.tabs.create({ url: chrome.runtime.getURL('popup/load.html') });
 }
 
 //-----------------------------------------------------------------------------------------------------------------
