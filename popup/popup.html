@@ -17,6 +17,14 @@
             <button id="save">Save Tabs</button>
             <button id="load">Load Tabs</button>
         </div>
+        <div id="save-overlay" class="hidden">
+            <button id="save-back"><img src="../icons/22c758.png" alt="Back" /></button>
+            <div id="save-overlay-content">
+                <label for="filename-input">Session name:</label>
+                <input type="text" id="filename-input" />
+                <button id="confirm-save">Save</button>
+            </div>
+        </div>
         <div id="settings-overlay" class="hidden">
             <button id="back"><img src="../icons/22c758.png" alt="Back" /></button>
             <div class="settings-row" data-tip="On: adds loaded tabs to your current session. Off: replaces all current tabs with those from the file.">
@@ -37,6 +45,13 @@
                 <span>Skip Duplicate URLs</span>
                 <label class="toggle">
                     <input type="checkbox" id="remove-duplicates">
+                    <span class="slider"></span>
+                </label>
+            </div>
+            <div class="settings-row" data-tip="When on, prompts you to name the file before saving. When off, uses an automatic timestamp filename.">
+                <span>Custom Filename</span>
+                <label class="toggle">
+                    <input type="checkbox" id="custom-filename">
                     <span class="slider"></span>
                 </label>
             </div>

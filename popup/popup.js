@@ -63,7 +63,7 @@ BUTTON METHODS - what happens on each respective button click!
 */
 
 function saveLinks() {
-    chrome.storage.local.get(['includePinnedTabs', 'removeDuplicates'], (s) => {
+    chrome.storage.local.get(['includePinnedTabs', 'removeDuplicates', 'customFilename'], (s) => {
         const includePinned = s.includePinnedTabs !== false;
         const dedup = !!s.removeDuplicates;
 
@@ -80,17 +80,49 @@ function saveLinks() {
                hour12: false
             }).formatToParts(now);
             const dt = parts.reduce((acc, part) => { acc[part.type] = part.value; return acc; }, {});
-            const formatted = `${dt.month}-${dt.day}-${dt.year}_${dt.hour}.${dt.minute}.${dt.second}`;
+            const defaultName = `Browser-Tabs-From_${dt.month}-${dt.day}-${dt.year}_${dt.hour}.${dt.minute}.${dt.second}`;
 
-            var element = document.createElement('a');
-            element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(urls.join('\n')));
-            element.setAttribute('download', "Browser-Tabs-From_" + formatted + ".txt");
-            element.style.display = 'none';
-            document.body.appendChild(element);
-            element.click();
-            document.body.removeChild(element);
+            if (s.customFilename) {
+                openSaveOverlay(urls, defaultName);
+            } else {
+                triggerDownload(urls, defaultName);
+            }
         });
     });
+}
+
+function triggerDownload(urls, filename) {
+    const element = document.createElement('a');
+    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(urls.join('\n')));
+    element.setAttribute('download', filename + '.txt');
+    element.style.display = 'none';
+    document.body.appendChild(element);
+    element.click();
+    document.body.removeChild(element);
+}
+
+function openSaveOverlay(urls, defaultName) {
+    const overlay = document.getElementById('save-overlay');
+    const input = document.getElementById('filename-input');
+    document.getElementById('popup-content').classList.add('hidden');
+    overlay.dataset.urls = JSON.stringify(urls);
+    overlay.dataset.defaultName = defaultName;
+    input.value = defaultName;
+    overlay.classList.remove('hidden');
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+        overlay.classList.add('active');
+        input.focus();
+        input.select();
+    }));
+}
+
+function closeSaveOverlay() {
+    const overlay = document.getElementById('save-overlay');
+    overlay.classList.remove('active');
+    overlay.addEventListener('transitionend', () => {
+        overlay.classList.add('hidden');
+        document.getElementById('popup-content').classList.remove('hidden');
+    }, { once: true });
 }
 
 function loadTxt() {
@@ -103,10 +135,11 @@ function openSettings() {
     const isOpen = overlay.classList.contains('active');
 
     if (!isOpen) {
-        chrome.storage.local.get(['preserveCurrentTabs', 'includePinnedTabs', 'removeDuplicates'], (s) => {
+        chrome.storage.local.get(['preserveCurrentTabs', 'includePinnedTabs', 'removeDuplicates', 'customFilename'], (s) => {
             document.getElementById('preserve-tabs').checked = !!s.preserveCurrentTabs;
             document.getElementById('include-pinned').checked = s.includePinnedTabs !== false;
             document.getElementById('remove-duplicates').checked = !!s.removeDuplicates;
+            document.getElementById('custom-filename').checked = !!s.customFilename;
         });
         main.classList.add('hidden');
         overlay.classList.remove('hidden');
@@ -137,7 +170,23 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('remove-duplicates').addEventListener('change', (e) => {
         chrome.storage.local.set({ removeDuplicates: e.target.checked });
     });
+    document.getElementById('custom-filename').addEventListener('change', (e) => {
+        chrome.storage.local.set({ customFilename: e.target.checked });
+    });
     document.getElementById('back').addEventListener('click', closeSettings);
+    document.getElementById('save-back').addEventListener('click', closeSaveOverlay);
+    document.getElementById('confirm-save').addEventListener('click', () => {
+        const overlay = document.getElementById('save-overlay');
+        const input = document.getElementById('filename-input');
+        const urls = JSON.parse(overlay.dataset.urls);
+        const filename = input.value.trim() || overlay.dataset.defaultName;
+        triggerDownload(urls, filename);
+        closeSaveOverlay();
+    });
+    document.getElementById('filename-input').addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') document.getElementById('confirm-save').click();
+        if (e.key === 'Escape') closeSaveOverlay();
+    });
 });
 
 //-----------------------------------------------------------------------------------------------------------------
