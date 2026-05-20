@@ -97,31 +97,36 @@ function saveLinks(tabs) {
     });
 }
 
-async function loadTxt(){
-    const [fileHandle] = await window.showOpenFilePicker();
-    const file = await fileHandle.getFile();
-    var content;
-    var links = [];
-    if (file) {
+function loadTxt() {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = '.txt';
+    input.style.display = 'none';
+    document.body.appendChild(input);
+
+    input.addEventListener('change', function () {
+        const file = input.files[0];
+        document.body.removeChild(input);
+        if (!file) return;
+
         var reader = new FileReader();
         reader.onload = function (e) {
-            content = reader.result;
-            
-            content.toString().split('\n').forEach(line => {
-                const cleanLine = line.trim(); // Removes hidden \r characters and spaces
-                
-                if (cleanLine) { // Skips completely empty lines
+            var links = [];
+            e.target.result.toString().split('\n').forEach(line => {
+                const cleanLine = line.trim();
+                if (cleanLine) {
                     const formattedUrl = cleanLine.startsWith('http') ? cleanLine : `https://${cleanLine}`;
                     links.push(formattedUrl);
                 }
             });
-
             links.forEach((link) => {
                 chrome.tabs.create({ url: link });
             });
         };
         reader.readAsText(file);
-    }
+    });
+
+    input.click();
 }
 
 //-----------------------------------------------------------------------------------------------------------------
