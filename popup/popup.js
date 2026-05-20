@@ -22,7 +22,7 @@ function listenForClicks() {
         }
 
         //call appropriate functions on button press.
-        if ((e.target.tagName !== "BUTTON" && e.target.TagName !== "INPUT") || !e.target.closest("#popup-content")) {
+        if ((e.target.tagName !== "BUTTON" && e.target.tagName !== "INPUT" && e.target.tagName !== "IMG") || !e.target.closest("#popup-content")) {
             // Ignore when click is not on a button within <div id="popup-content">.
             return;
         }
@@ -30,8 +30,10 @@ function listenForClicks() {
             reset();
         } else if (e.target.id == "save") {
             saveLinks();
-        }else if(e.target.id == "load"){
+        } else if (e.target.id == "load") {
             loadTxt();
+        } else if (e.target.id == "settings" || e.target.closest("#settings")) {
+            openSettings();
         }
     });
 }
@@ -99,7 +101,12 @@ function saveLinks(tabs) {
 
 async function loadTxt() {
     const tab = await getTab();
-    chrome.tabs.create({ url: chrome.runtime.getURL('popup/load.html') + '?closeTabId=' + tab.id });
+    chrome.tabs.update(tab.id, { url: chrome.runtime.getURL('popup/load.html') });
+}
+
+//helper if settings is clicked
+function openSettings() {
+    // TODO
 }
 
 //-----------------------------------------------------------------------------------------------------------------

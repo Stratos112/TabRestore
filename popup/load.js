@@ -14,12 +14,7 @@ document.getElementById('file-input').addEventListener('change', function () {
         });
         if (links.length === 0) return;
         links.forEach(link => chrome.tabs.create({ url: link }));
-        const closeTabId = parseInt(new URLSearchParams(window.location.search).get('closeTabId'));
-        chrome.tabs.getCurrent(tab => {
-            const toClose = [tab.id];
-            if (closeTabId) toClose.push(closeTabId);
-            chrome.tabs.remove(toClose);
-        });
+        chrome.tabs.getCurrent(tab => chrome.tabs.remove(tab.id));
     };
     reader.readAsText(file);
 });

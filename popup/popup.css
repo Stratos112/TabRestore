@@ -3,9 +3,9 @@ body {
   width: 150px;
 }
 
-div[id="popup-content"]
-{
-    margin: 0 auto;
+#popup-content {
+    position: relative;
+    padding: 10px 0 1px 0;
 }
 
 .hidden {
@@ -14,17 +14,23 @@ div[id="popup-content"]
 
 button {
     border: none;
-    width: 80%;
+    display: block;
+    width: calc(100% - 28px);
     font-size: 1.0em;
     text-align: center;
-    position: relative;
-    left:5%;
+    padding: 10px;
+    margin: 14px 14px;
     cursor: pointer;
-    background-color: #e5f2f2;
+    background-color: #c2e0e0;
+}
+
+#save {
+    margin-top: 4px;
+    clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 0 100%);
 }
 
 button:hover {
-  background-color: #cff2f2;
+  background-color: #a8d4d4;
 }
 
 button[type="reset"] {
@@ -33,4 +39,25 @@ button[type="reset"] {
 
 button[type="reset"]:hover {
   background-color: #eaea9d;
+}
+
+#settings {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    width: auto;
+    margin: 0;
+    padding: 2px;
+    background: none;
+}
+
+#settings img {
+    width: 20px;
+    height: 20px;
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+#settings:hover img {
+    transform: rotate(30deg);
 }
