@@ -13,12 +13,18 @@ document.getElementById('file-input').addEventListener('change', function () {
             }
         });
         if (links.length === 0) return;
-        links.forEach(link => chrome.tabs.create({ url: link }));
-        const closeTabId = parseInt(new URLSearchParams(window.location.search).get('closeTabId'));
-        chrome.tabs.getCurrent(tab => {
-            const toClose = [tab.id];
-            if (closeTabId) toClose.push(closeTabId);
-            chrome.tabs.remove(toClose);
+
+        chrome.storage.local.get('preserveCurrentTabs', ({ preserveCurrentTabs }) => {
+            if (preserveCurrentTabs) {
+                links.forEach(link => chrome.tabs.create({ url: link }));
+                chrome.tabs.getCurrent(tab => chrome.tabs.remove(tab.id));
+            } else {
+                chrome.tabs.query({ currentWindow: true }, existingTabs => {
+                    const existingIds = existingTabs.map(t => t.id);
+                    links.forEach(link => chrome.tabs.create({ url: link }));
+                    chrome.tabs.remove(existingIds);
+                });
+            }
         });
     };
     reader.readAsText(file);

@@ -1,12 +1,12 @@
 html,
 body {
-    width: 150px;
+    width: 170px;
     position: relative;
 }
 
 #popup-content {
     position: relative;
-    padding: 10px 0 1px 0;
+    padding: 6px 3px 2px 4px;
 }
 
 .hidden {
@@ -14,17 +14,26 @@ body {
 }
 
 #settings-overlay {
-    position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
     background: #f0f8f8;
     padding: 12px;
     box-sizing: border-box;
+    min-height: 160px;
+    opacity: 0;
+    transform: translateX(16px);
+    transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1), transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none;
+}
+
+#settings-overlay.active {
+    opacity: 1;
+    transform: translateX(0);
+    pointer-events: all;
 }
 
 #back {
     position: absolute;
-    top: 4px;
-    left: 4px;
+    top: 1px;
+    left: 1px;
     width: auto;
     margin: 0;
     padding: 2px;
@@ -100,8 +109,8 @@ button {
     width: calc(100% - 28px);
     font-size: 1.0em;
     text-align: center;
-    padding: 10px;
-    margin: 14px 14px;
+    padding: 15px;
+    margin: 8px 2px;
     cursor: pointer;
     background-color: #c2e0e0;
 }
@@ -112,24 +121,24 @@ button {
 }
 
 button:hover {
-  background-color: #a8d4d4;
+    background-color: #a8d4d4;
 }
 
 button[type="reset"] {
-  background-color: #fbfbc9;
+    background-color: #fbfbc9;
 }
 
 button[type="reset"]:hover {
-  background-color: #eaea9d;
+    background-color: #eaea9d;
 }
 
 #settings {
     position: absolute;
-    top: 4px;
-    right: 4px;
+    top: 2px;
+    right: 10px;
     width: auto;
-    margin: 0;
-    padding: 2px;
+    margin: 1px;
+    padding: 1px;
     background: none;
 }
 

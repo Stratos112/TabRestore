@@ -1,7 +1,7 @@
 //Sky Vercautern
 //Chrome extension - scraper
 //5/6/2024
-//doing stuff in the a tual popup
+//saving and loading current tab urls to a .txt file for recovery later. 
 
 
 
@@ -99,35 +99,43 @@ function saveLinks(tabs) {
     });
 }
 
-async function loadTxt() {
-    const tab = await getTab();
-    const { preserveCurrentTabs } = await chrome.storage.local.get('preserveCurrentTabs');
-    const url = chrome.runtime.getURL('popup/load.html')
-        + '?closeTabId=' + (preserveCurrentTabs ? '' : tab.id);
-    chrome.tabs.update(tab.id, { url });
+function loadTxt() {
+    chrome.tabs.create({ url: chrome.runtime.getURL('popup/load.html') });
 }
 
 function openSettings() {
     const overlay = document.getElementById('settings-overlay');
-    const isHidden = overlay.classList.contains('hidden');
+    const main = document.getElementById('popup-content');
+    const isOpen = overlay.classList.contains('active');
 
-    if (isHidden) {
+    if (!isOpen) {
         chrome.storage.local.get('preserveCurrentTabs', ({ preserveCurrentTabs }) => {
             document.getElementById('preserve-tabs').checked = !!preserveCurrentTabs;
         });
+        main.classList.add('hidden');
         overlay.classList.remove('hidden');
+        requestAnimationFrame(() => requestAnimationFrame(() => {
+            overlay.classList.add('active');
+        }));
     } else {
-        overlay.classList.add('hidden');
+        closeSettings();
     }
+}
+
+function closeSettings() {
+    const overlay = document.getElementById('settings-overlay');
+    overlay.classList.remove('active');
+    overlay.addEventListener('transitionend', () => {
+        overlay.classList.add('hidden');
+        document.getElementById('popup-content').classList.remove('hidden');
+    }, { once: true });
 }
 
 document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('preserve-tabs').addEventListener('change', (e) => {
         chrome.storage.local.set({ preserveCurrentTabs: e.target.checked });
     });
-    document.getElementById('back').addEventListener('click', () => {
-        document.getElementById('settings-overlay').classList.add('hidden');
-    });
+    document.getElementById('back').addEventListener('click', closeSettings);
 });
 
 //-----------------------------------------------------------------------------------------------------------------
