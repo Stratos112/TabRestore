@@ -62,40 +62,34 @@ BUTTON METHODS - what happens on each respective button click!
 --------------------------------------------------------------
 */
 
-//helper if "save" is clicked""
-function saveLinks(tabs) {
-    //initialize an array of links (strings)
-    var links = "";
+function saveLinks() {
+    chrome.storage.local.get(['includePinnedTabs', 'removeDuplicates'], (s) => {
+        const includePinned = s.includePinnedTabs !== false;
+        const dedup = !!s.removeDuplicates;
 
-    //get all the tabs in the current window
-    chrome.tabs.query({ currentWindow: true }, function (tabs) {
-        tabs.forEach(function (tab) {
-            links += (tab.url + "\n");
+        chrome.tabs.query({ currentWindow: true }, function (tabs) {
+            let filtered = includePinned ? tabs : tabs.filter(t => !t.pinned);
+            let urls = filtered.map(t => t.url);
+            if (dedup) urls = [...new Set(urls)];
+            if (urls.length === 0) return;
+
+            const now = new Date();
+            const parts = new Intl.DateTimeFormat('en-US', {
+               year: 'numeric', month: '2-digit', day: '2-digit',
+               hour: '2-digit', minute: '2-digit', second: '2-digit',
+               hour12: false
+            }).formatToParts(now);
+            const dt = parts.reduce((acc, part) => { acc[part.type] = part.value; return acc; }, {});
+            const formatted = `${dt.month}-${dt.day}-${dt.year}_${dt.hour}.${dt.minute}.${dt.second}`;
+
+            var element = document.createElement('a');
+            element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(urls.join('\n')));
+            element.setAttribute('download', "Browser-Tabs-From_" + formatted + ".txt");
+            element.style.display = 'none';
+            document.body.appendChild(element);
+            element.click();
+            document.body.removeChild(element);
         });
-
-        //get timestamp
-        const now = new Date();
-        const parts = new Intl.DateTimeFormat('en-US', {
-           year: 'numeric', month: '2-digit', day: '2-digit',
-           hour: '2-digit', minute: '2-digit', second: '2-digit',
-           hour12: false
-        }).formatToParts(now);
-
-        const dt = parts.reduce((acc, part) => {
-        acc[part.type] = part.value;
-        return acc;
-        }, {});
-
-        const formatted = `${dt.month}-${dt.day}-${dt.year}_${dt.hour}.${dt.minute}.${dt.second}`;
-
-        // download 
-        var element = document.createElement('a');
-        element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(links));
-        element.setAttribute('download', "Browser-Tabs-From_" + formatted + ".txt");
-        element.style.display = 'none';
-        document.body.appendChild(element);
-        element.click();
-        document.body.removeChild(element);
     });
 }
 
@@ -109,8 +103,10 @@ function openSettings() {
     const isOpen = overlay.classList.contains('active');
 
     if (!isOpen) {
-        chrome.storage.local.get('preserveCurrentTabs', ({ preserveCurrentTabs }) => {
-            document.getElementById('preserve-tabs').checked = !!preserveCurrentTabs;
+        chrome.storage.local.get(['preserveCurrentTabs', 'includePinnedTabs', 'removeDuplicates'], (s) => {
+            document.getElementById('preserve-tabs').checked = !!s.preserveCurrentTabs;
+            document.getElementById('include-pinned').checked = s.includePinnedTabs !== false;
+            document.getElementById('remove-duplicates').checked = !!s.removeDuplicates;
         });
         main.classList.add('hidden');
         overlay.classList.remove('hidden');
@@ -134,6 +130,12 @@ function closeSettings() {
 document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('preserve-tabs').addEventListener('change', (e) => {
         chrome.storage.local.set({ preserveCurrentTabs: e.target.checked });
+    });
+    document.getElementById('include-pinned').addEventListener('change', (e) => {
+        chrome.storage.local.set({ includePinnedTabs: e.target.checked });
+    });
+    document.getElementById('remove-duplicates').addEventListener('change', (e) => {
+        chrome.storage.local.set({ removeDuplicates: e.target.checked });
     });
     document.getElementById('back').addEventListener('click', closeSettings);
 });
