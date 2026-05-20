@@ -97,8 +97,9 @@ function saveLinks(tabs) {
     });
 }
 
-function loadTxt() {
-    chrome.tabs.create({ url: chrome.runtime.getURL('popup/load.html') });
+async function loadTxt() {
+    const tab = await getTab();
+    chrome.tabs.create({ url: chrome.runtime.getURL('popup/load.html') + '?closeTabId=' + tab.id });
 }
 
 //-----------------------------------------------------------------------------------------------------------------
