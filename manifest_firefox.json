@@ -2,34 +2,28 @@
   "manifest_version": 3,
   "name": "TabRestore",
   "version": "1.1",
-  "description": "Click 'Save Links' to backup current session to a .txt file. click 'Load .txt' to load a session from a file.",
+  "description": "Save your open tabs to a .txt file and restore them later. Simple session management for Chrome and Firefox.",
   "icons": {
-    "48": "icons/616487.png"
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "64": "icons/icon64.png",
+    "128": "icons/icon128.png"
   },
-  "content_scripts": [
-    {
-      "js": [
-        "content_scripts/blankpage_content.js"
-      ],
-      "matches": [
-        "http://www.blankwebsite.com/"
-      ]
-    }
-  ],
   "permissions": [
     "activeTab",
     "tabs",
-    "scripting",
     "storage",
     "tabGroups"
   ],
-  "host_permissions": [
-    "http://*/*",
-    "https://*/*",
-    "*://*/*"
-  ],
   "action": {
-    "default_icon": "icons/616487.png",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png",
+      "48": "icons/icon48.png",
+      "64": "icons/icon64.png",
+      "128": "icons/icon128.png"
+    },
     "default_title": "TabRestore",
     "default_popup": "popup/popup.html"
   },
