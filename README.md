@@ -1,43 +1,38 @@
 # TabRestore
 
-Save your open tabs to a .txt file and restore them later. That's it.
+Inspired by my girlfriend noting that her laptop was being slow, and then noticing about a million tabs open. Guys, suggesting she close the tabs was a really bad idea and a bad suggestion because clearly she might have needed them later. 0/10 will not repeat. So I made this to help instead! :p  (.. now she uses it!)
+
+An incredibly simple tool to save your open tabs to a .txt file and restore them later.  
+  
+Like bookmarking except for context instead of single pages. 
 
 Works in Chrome and Firefox.
 
----
+Two buttons:
+- Save dumps all your current tabs to a timestamped .txt file. 
+- Load opens that file and restores the tabs.
 
-## What it does
 
-Two buttons. Save dumps all your current tabs to a timestamped .txt file. Load opens that file and restores the tabs. You can pick whether to replace what you have or add to it.
+<img width="151" height="111" alt="image" src="https://github.com/user-attachments/assets/827a3975-1fe0-4277-b1e4-2c86b2a4546b" />
 
-<image: screenshot of the main popup>
-
----
-
-## How to use it
-
-**Saving:** Click "Save Tabs". A .txt file downloads automatically. If you have the Custom Filename setting on, it'll ask you to name it first.
-
-**Loading:** Click "Load Tabs". A new tab opens with a file picker. Select your .txt file and your tabs open. That picker tab closes itself when it's done.
-
-<image: screenshot of the load picker tab>
 
 ---
 
 ## Settings
 
-Click the gear icon in the top right corner to open settings. Click the arrow to go back.
+Click the gear icon in the top right.
 
-<image: screenshot of the settings panel>
+<img width="151" height="296" alt="image" src="https://github.com/user-attachments/assets/98215e4d-ea85-47e6-96ec-e895ba8fd793" />
+
 
 **Keep Current Tabs**
-When this is on, loaded tabs get added alongside whatever you already have open. They'll be grouped together in a new tab group (Chrome only) named after the file. When it's off, your current tabs get replaced entirely with the ones from the file.
+When this is on, loaded tabs get added alongside whatever you already have open. They'll be grouped together in a new tab group (Chrome only) named after the file. When it's off, your current tabs get removed and the session is replaced entirely with the one from the file.
 
 **Include Pinned Tabs**
 On by default. Toggle this off if you have tabs pinned permanently and don't want them ending up in every saved session.
 
 **Skip Duplicate URLs**
-When saving, this filters out any tabs sharing the same exact URL — same domain but different pages still get saved separately. When loading, it skips any URLs already open in your current session. Exact match only.
+When saving, this filters out any tabs sharing the same exact URL. When loading, it skips any URLs already open in your current session. Exact match only.
 
 **Custom Filename**
 Off by default. Turn this on and you'll get a prompt to name your session before it saves. Leave it blank and it falls back to the timestamp name anyway.
@@ -72,13 +67,16 @@ These are features I'm planning on adding. Some of them need browser APIs that a
 
 ---
 
-## Buy me a coffee
+## Free software makes the world a better place.
 
-If this saved you some time or headache, feel free to throw a few dollars my way.
+I drink a lot of coffee and Grad School is expensive. <3
 
-[tip jar coming soon]
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/D8W51ZZ1IN)   
+
+<img width="410" height="410" alt="Ko-fi_qrcode" src="https://github.com/user-attachments/assets/2bb7c7f1-c97a-4271-b5df-1ea5e4c44d41" />
 
 ---
 
+Love,
 All Rights Reserved.
 Sky Vercauteren, May 2026

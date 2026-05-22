@@ -97,11 +97,39 @@ body {
     background-color: #3a9a9a !important;
 }
 
+@keyframes kofi-sip {
+    0%   { transform: rotate(0deg); }
+    35%  { transform: rotate(-30deg); }
+    60%  { transform: rotate(-28deg); }
+    100% { transform: rotate(0deg); }
+}
+
+#kofi-btn {
+    display: block;
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    line-height: 0;
+}
+
+#kofi-btn img {
+    width: 46px;
+    height: 40px;
+    border-radius: 50%;
+    filter: drop-shadow(0 3px 6px rgba(74, 172, 172, 0.45));
+    transform-origin: bottom center;
+}
+
+#kofi-btn:hover img {
+    animation: kofi-sip 1.8s ease-in-out forwards;
+}
+
 #settings-overlay {
     background: #f0f8f8;
     padding: 12px;
     box-sizing: border-box;
-    min-height: 280px;
+    min-height: 320px;
     opacity: 0;
     transform: translateX(16px);
     transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1), transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
