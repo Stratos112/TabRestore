@@ -14,7 +14,9 @@ document.getElementById('file-input').addEventListener('change', function () {
         });
         if (links.length === 0) return;
 
-        chrome.storage.local.get(['preserveCurrentTabs', 'removeDuplicates'], ({ preserveCurrentTabs, removeDuplicates }) => {
+        chrome.storage.local.get(['preserveCurrentTabs', 'removeDuplicates'], (s) => {
+            const preserveCurrentTabs = s.preserveCurrentTabs !== false;
+            const removeDuplicates = s.removeDuplicates !== false;
             chrome.tabs.query({ currentWindow: true }, existingTabs => {
                 const existingUrls = new Set(existingTabs.map(t => t.url));
 

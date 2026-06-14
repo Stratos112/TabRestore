@@ -64,9 +64,9 @@ BUTTON METHODS - what happens on each respective button click!
 
 function saveLinks() {
     chrome.storage.local.get(['includePinnedTabs', 'includeSleepingTabs', 'removeDuplicates', 'customFilename'], (s) => {
-        const includePinned = s.includePinnedTabs !== false;
+        const includePinned = !!s.includePinnedTabs;
         const includeSleeping = s.includeSleepingTabs !== false;
-        const dedup = !!s.removeDuplicates;
+        const dedup = s.removeDuplicates !== false;
 
         chrome.tabs.query({ currentWindow: true }, function (tabs) {
             let filtered = includePinned ? tabs : tabs.filter(t => !t.pinned);
@@ -138,10 +138,10 @@ function openSettings() {
 
     if (!isOpen) {
         chrome.storage.local.get(['preserveCurrentTabs', 'includePinnedTabs', 'includeSleepingTabs', 'removeDuplicates', 'customFilename'], (s) => {
-            document.getElementById('preserve-tabs').checked = !!s.preserveCurrentTabs;
-            document.getElementById('include-pinned').checked = s.includePinnedTabs !== false;
+            document.getElementById('preserve-tabs').checked = s.preserveCurrentTabs !== false;
+            document.getElementById('include-pinned').checked = !!s.includePinnedTabs;
             document.getElementById('include-sleeping').checked = s.includeSleepingTabs !== false;
-            document.getElementById('remove-duplicates').checked = !!s.removeDuplicates;
+            document.getElementById('remove-duplicates').checked = s.removeDuplicates !== false;
             document.getElementById('custom-filename').checked = !!s.customFilename;
         });
         main.classList.add('hidden');
