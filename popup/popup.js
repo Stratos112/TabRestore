@@ -63,12 +63,14 @@ BUTTON METHODS - what happens on each respective button click!
 */
 
 function saveLinks() {
-    chrome.storage.local.get(['includePinnedTabs', 'removeDuplicates', 'customFilename'], (s) => {
+    chrome.storage.local.get(['includePinnedTabs', 'includeSleepingTabs', 'removeDuplicates', 'customFilename'], (s) => {
         const includePinned = s.includePinnedTabs !== false;
+        const includeSleeping = s.includeSleepingTabs !== false;
         const dedup = !!s.removeDuplicates;
 
         chrome.tabs.query({ currentWindow: true }, function (tabs) {
             let filtered = includePinned ? tabs : tabs.filter(t => !t.pinned);
+            if (!includeSleeping) filtered = filtered.filter(t => !t.discarded);
             let urls = filtered.map(t => t.url);
             if (dedup) urls = [...new Set(urls)];
             if (urls.length === 0) return;
@@ -135,9 +137,10 @@ function openSettings() {
     const isOpen = overlay.classList.contains('active');
 
     if (!isOpen) {
-        chrome.storage.local.get(['preserveCurrentTabs', 'includePinnedTabs', 'removeDuplicates', 'customFilename'], (s) => {
+        chrome.storage.local.get(['preserveCurrentTabs', 'includePinnedTabs', 'includeSleepingTabs', 'removeDuplicates', 'customFilename'], (s) => {
             document.getElementById('preserve-tabs').checked = !!s.preserveCurrentTabs;
             document.getElementById('include-pinned').checked = s.includePinnedTabs !== false;
+            document.getElementById('include-sleeping').checked = s.includeSleepingTabs !== false;
             document.getElementById('remove-duplicates').checked = !!s.removeDuplicates;
             document.getElementById('custom-filename').checked = !!s.customFilename;
         });
@@ -166,6 +169,9 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     document.getElementById('include-pinned').addEventListener('change', (e) => {
         chrome.storage.local.set({ includePinnedTabs: e.target.checked });
+    });
+    document.getElementById('include-sleeping').addEventListener('change', (e) => {
+        chrome.storage.local.set({ includeSleepingTabs: e.target.checked });
     });
     document.getElementById('remove-duplicates').addEventListener('change', (e) => {
         chrome.storage.local.set({ removeDuplicates: e.target.checked });
