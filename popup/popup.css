@@ -129,7 +129,7 @@ body {
     background: #f0f8f8;
     padding: 12px;
     box-sizing: border-box;
-    min-height: 320px;
+    min-height: 360px;
     opacity: 0;
     transform: translateX(16px);
     transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1), transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
