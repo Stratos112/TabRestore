@@ -339,13 +339,11 @@ button[type="reset"]:hover {
     #save {
         clip-path: polygon(
             0 0,
-            calc(100% - 120px) 0px,
-            calc(100% - 114px) 31px,
-            calc(100% - 104px) 62px,
-            calc(100% - 83px) 83px,
-            calc(100% - 62px) 104px,
-            calc(100% - 31px) 114px,
-            100% 120px,
+            calc(100% - 132px) 0px,
+            calc(100% - 118px) 45px,
+            calc(100% - 87px) 87px,
+            calc(100% - 45px) 118px,
+            100% 132px,
             100% 100%,
             0 100%
         );
