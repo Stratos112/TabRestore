@@ -328,7 +328,7 @@ button[type="reset"]:hover {
 
     #save, #load {
         flex: 1;
-        font-size: 2.4rem;
+        font-size: 3rem;
         font-weight: 700;
         width: 100%;
         border-radius: 12px;
@@ -363,12 +363,26 @@ button[type="reset"]:hover {
     }
 
     .settings-row {
-        font-size: 2.2rem;
+        font-size: 2.75rem;
         margin-top: 52px;
+        flex-wrap: wrap;
     }
 
     .settings-row + .settings-row {
         margin-top: 36px;
+    }
+
+    .settings-row[data-tip]::after {
+        content: attr(data-tip);
+        width: 100%;
+        position: static !important;
+        background: none !important;
+        color: #777 !important;
+        font-size: 1.1rem !important;
+        line-height: 1.5;
+        padding: 8px 0 0 0 !important;
+        border-radius: 0 !important;
+        pointer-events: none;
     }
 
     #save-back img, #back img {
@@ -397,7 +411,7 @@ button[type="reset"]:hover {
         left: 4px;
     }
 
-    input:checked + .slider::before {
+    .toggle input:checked + .slider::before {
         transform: translateX(36px);
     }
 
