@@ -1,7 +1,15 @@
 document.getElementById('file-input').addEventListener('change', function () {
     const file = this.files[0];
     if (!file) return;
+    const warning = document.getElementById('warning');
     const display = document.getElementById('file-name-display');
+    if (!file.name.endsWith('.txt')) {
+        warning.style.display = 'block';
+        if (display) display.textContent = 'No file selected';
+        this.value = '';
+        return;
+    }
+    warning.style.display = 'none';
     if (display) display.textContent = file.name;
 
     var reader = new FileReader();
