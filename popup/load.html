@@ -6,15 +6,38 @@
     <style>
         body { font-family: sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; margin: 0; background: #f5f5f5; }
         p { color: #555; }
+        #mobile-label { display: none; }
+        #file-name-display { display: none; }
         @media (pointer: coarse) {
+            body { justify-content: flex-start; padding-top: 12vh; }
             p { font-size: 2.8rem; text-align: center; padding: 0 24px; }
-            input[type="file"] { font-size: 2.2rem; margin-top: 32px; }
+            input[type="file"] { display: none; }
+            #mobile-label {
+                display: block;
+                font-size: 2.2rem;
+                background: #c2e0e0;
+                border: none;
+                padding: 24px 48px;
+                cursor: pointer;
+                margin-top: 32px;
+                border-radius: 8px;
+            }
+            #file-name-display {
+                display: block;
+                font-size: 1.6rem;
+                color: #777;
+                margin-top: 20px;
+                text-align: center;
+                padding: 0 24px;
+            }
         }
     </style>
 </head>
 <body>
     <p>Select your saved tabs file...</p>
     <input type="file" id="file-input" accept=".txt" />
+    <label for="file-input" id="mobile-label">Choose File</label>
+    <span id="file-name-display">No file selected</span>
     <script src="load.js"></script>
 </body>
 </html>

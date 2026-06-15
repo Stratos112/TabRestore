@@ -1,6 +1,8 @@
 document.getElementById('file-input').addEventListener('change', function () {
     const file = this.files[0];
     if (!file) return;
+    const display = document.getElementById('file-name-display');
+    if (display) display.textContent = file.name;
 
     var reader = new FileReader();
     reader.onload = function (e) {
