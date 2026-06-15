@@ -336,6 +336,21 @@ button[type="reset"]:hover {
         padding: 0;
     }
 
+    #save {
+        clip-path: polygon(
+            0 0,
+            calc(100% - 120px) 0px,
+            calc(100% - 114px) 31px,
+            calc(100% - 104px) 62px,
+            calc(100% - 83px) 83px,
+            calc(100% - 62px) 104px,
+            calc(100% - 31px) 114px,
+            100% 120px,
+            100% 100%,
+            0 100%
+        );
+    }
+
     #settings {
         position: absolute;
         top: 24px;
@@ -378,7 +393,8 @@ button[type="reset"]:hover {
         position: static !important;
         background: none !important;
         color: #777 !important;
-        font-size: 1.1rem !important;
+        font-size: 1.65rem !important;
+        font-style: italic !important;
         line-height: 1.5;
         padding: 8px 0 0 0 !important;
         border-radius: 0 !important;
