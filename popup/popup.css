@@ -297,3 +297,15 @@ button[type="reset"]:hover {
 #settings:hover img {
     transform: rotate(30deg);
 }
+
+@media (pointer: coarse) {
+    html, body {
+        width: 100vw;
+        height: 100vh;
+        overflow-y: auto;
+    }
+
+    #frame {
+        min-height: 100vh;
+    }
+}
