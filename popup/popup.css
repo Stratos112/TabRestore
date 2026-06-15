@@ -301,11 +301,30 @@ button[type="reset"]:hover {
 @media (pointer: coarse) {
     html, body {
         width: 100vw;
-        height: 100vh;
-        overflow-y: auto;
+        height: 100dvh;
+        display: flex;
+        flex-direction: column;
     }
 
     #frame {
-        min-height: 100vh;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    #popup-content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    #settings-overlay {
+        min-height: 100%;
+        flex: 1;
+    }
+
+    #settings img {
+        width: 36px;
+        height: 36px;
     }
 }
