@@ -5,39 +5,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <style>
         body { font-family: sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; margin: 0; background: #f5f5f5; }
-        p { color: #555; }
-        #warning { display: none; color: #b04040; margin-top: 12px; font-size: 0.9em; }
-        #mobile-label { display: none; }
-        #file-name-display { display: none; }
+        p { color: #555; font-size: 1.1rem; }
+        input[type="file"] { display: none; }
+        #warning { display: none; color: #b04040; margin-top: 12px; font-size: 0.85rem; text-align: center; }
+        #choose-label {
+            display: block;
+            font-size: 1.1rem;
+            background: #c2e0e0;
+            border: none;
+            padding: 14px 48px;
+            cursor: pointer;
+            margin-top: 20px;
+            border-radius: 8px;
+            transition: background 0.2s;
+        }
+        #choose-label:hover { background: #a8d4d4; }
+        #file-name-display {
+            font-size: 0.85rem;
+            color: #777;
+            margin-top: 14px;
+            text-align: center;
+        }
         @media (pointer: coarse) {
             body { justify-content: flex-start; padding-top: 12vh; }
             p { font-size: 1.68rem; text-align: center; padding: 0 24px; }
-            input[type="file"] { display: none; }
-            #mobile-label {
-                display: block;
-                font-size: 1.32rem;
-                background: #c2e0e0;
-                border: none;
-                padding: 24px 48px;
-                cursor: pointer;
-                margin-top: 32px;
-                border-radius: 8px;
-            }
-            #file-name-display {
-                display: block;
-                font-size: 0.96rem;
-                color: #777;
-                margin-top: 20px;
-                text-align: center;
-                padding: 0 24px;
-            }
+            #choose-label { font-size: 1.32rem; padding: 24px 48px; margin-top: 32px; }
+            #file-name-display { font-size: 0.96rem; margin-top: 20px; padding: 0 24px; }
+            #warning { font-size: 0.9rem; }
         }
     </style>
 </head>
 <body>
     <p>Select your saved tabs file...</p>
     <input type="file" id="file-input" accept=".txt" />
-    <label for="file-input" id="mobile-label">Choose File</label>
+    <label for="file-input" id="choose-label">Choose File</label>
     <span id="file-name-display">No file selected</span>
     <p id="warning">That doesn't look like a .txt file — please select a different one.</p>
     <script src="load.js"></script>

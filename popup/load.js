@@ -14,8 +14,15 @@ document.getElementById('file-input').addEventListener('change', function () {
 
     var reader = new FileReader();
     reader.onload = function (e) {
+        const allLines = e.target.result.toString().split('\n');
+        const firstFew = allLines.map(l => l.trim()).filter(l => l).slice(0, 3);
+        const looksValid = firstFew.some(l => l.includes('.'));
+        if (!looksValid) {
+            document.getElementById('warning').style.display = 'block';
+            return;
+        }
         var links = [];
-        e.target.result.toString().split('\n').forEach(line => {
+        allLines.forEach(line => {
             const cleanLine = line.trim();
             if (cleanLine) {
                 const formattedUrl = cleanLine.startsWith('http') ? cleanLine : `https://${cleanLine}`;
