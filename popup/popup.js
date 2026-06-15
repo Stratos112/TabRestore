@@ -129,6 +129,7 @@ function closeSaveOverlay() {
 
 function loadTxt() {
     chrome.tabs.create({ url: chrome.runtime.getURL('popup/load.html') });
+    window.close();
 }
 
 function openSettings() {
