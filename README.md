@@ -31,6 +31,9 @@ When this is on, loaded tabs get added alongside whatever you already have open.
 **Include Pinned Tabs**
 On by default. Toggle this off if you have tabs pinned permanently and don't want them ending up in every saved session.
 
+**Include Sleeping Tabs**
+On by default. When off, sleeping (discarded) tabs are excluded from saved sessions.
+
 **Skip Duplicate URLs**
 When saving, this filters out any tabs sharing the same exact URL. When loading, it skips any URLs already open in your current session. Exact match only.
 
