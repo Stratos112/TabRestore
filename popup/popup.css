@@ -345,15 +345,15 @@ button[type="reset"]:hover {
     }
 
     #settings img {
-        width: 64px;
-        height: 64px;
+        width: 90px;
+        height: 90px;
     }
 
     #settings-overlay {
         flex: 1;
         overflow-y: auto;
         min-height: unset;
-        padding: 20px;
+        padding: 28px 24px;
         font-size: 1.4rem;
     }
 
@@ -363,17 +363,42 @@ button[type="reset"]:hover {
     }
 
     .settings-row {
-        font-size: 1.4rem;
-        margin-top: 44px;
+        font-size: 2.2rem;
+        margin-top: 52px;
     }
 
     .settings-row + .settings-row {
-        margin-top: 28px;
+        margin-top: 36px;
     }
 
     #save-back img, #back img {
+        width: 72px;
+        height: 72px;
+    }
+
+    #kofi-btn img {
+        width: 100px;
+        height: 88px;
+    }
+
+    .toggle {
+        width: 80px;
+        height: 44px;
+    }
+
+    .slider {
+        border-radius: 44px;
+    }
+
+    .slider::before {
         width: 36px;
         height: 36px;
+        top: 4px;
+        left: 4px;
+    }
+
+    input:checked + .slider::before {
+        transform: translateX(36px);
     }
 
     #filename-input, #save-overlay-content label {
